@@ -1,0 +1,59 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://use.fontawesome.com/5e8a202dcd.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANPR</title>
+    <link rel="stylesheet" href="{%static '../static/style.css' %}">
+
+  </head>
+  <body>
+    {% block content %}
+    <section class="header">
+
+    </section>
+    <section class="middle">
+
+      <div class="description">
+
+        <h1>Automatic Number Plate Recognition System(ANPR)</h1>
+        <p>Please upload a cute picture of your vehicle.</p>
+
+        <form enctype="multipart/form-data" action="{%url 'home' %}" method='post'>
+          {% csrf_token %}
+          <input type="file" id="actual-btn" name="submit-btn" hidden/>
+          <label for="actual-btn" class="btn">Choose File</label>
+          <span id="file-chosen">No file chosen</span>
+          <br><br><br>
+          <input type="submit" value="Go!">
+
+        </form>
+      </div>
+    </section>
+    <section class="display">
+      {%if url %}
+        <div class="split-1">
+          <img src="{{url}}"/>
+        </div>
+        <div class="split-2">
+          <p>{{ocr_processed}}</p>
+      {% endif %}
+        </div>
+    </section>
+    <section class="footer">
+      <div class="icons">
+        <a href="https://www.linkedin.com/in/harshithptl/"><i class="fa fa-linkedin"></i></a>
+      </div>
+    </section>
+    <script type="text/javascript">
+      const actualBtn = document.getElementById('actual-btn');
+      const fileChosen = document.getElementById('file-chosen');
+      actualBtn.addEventListener('change', function(){
+        fileChosen.textContent = this.files[0].name
+      })
+    </script>
+    {% endblock %}
+  </body>
+</html>
